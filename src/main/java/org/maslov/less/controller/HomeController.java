@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -22,9 +21,9 @@ public class HomeController {
         return "hello";
     }
     @RequestMapping(value = "/users")
-    public String getUsers(Model model) throws SQLException {
-        model.addAttribute( "users", users);// userDAO.getAll() );
-        return "users";
+    public String getUsers(Model model)  {
+        model.addAttribute( "users", users);;
+        return "Users";
     }
     @GetMapping(value = "/addUsers")
     public String getSignUp(Model model)
@@ -37,8 +36,8 @@ public class HomeController {
         if (result.hasErrors()){
             return "sign_up";
         }
-        //users.add(user);
-        return "redirect:/users";
+        users.add(user);
+        return "Users";
     }
 }
 
