@@ -1,6 +1,8 @@
 package org.maslov.less.controller;
 
+import org.maslov.less.dao.UserDAO;
 import org.maslov.less.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -10,20 +12,23 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
 @Controller
 public class HomeController {
-    Collection<User> users = new ArrayList<>();
-    @GetMapping(value = "/")
+    @Autowired
+    private UserDAO userDAO;
+
+    @GetMapping("/")
     public String hello() {
         return "/Hello";
     }
     @RequestMapping(value = "/users")
-    public String getUsers(Model model)  {
-        model.addAttribute( "users", users);;
-        return "Users";
+    public String getUsers(Model model) throws SQLException {
+        model.addAttribute( "users", userDAO.getAll() );
+        return "users";
     }
     @GetMapping(value = "/addUsers")
     public String getSignUp(Model model)
@@ -36,8 +41,8 @@ public class HomeController {
         if (result.hasErrors()){
             return "/Sign_up";
         }
-        users.add(user);
-        return "Users";
+        //users.add(user);
+        return "redirect:/users";
     }
 }
 
