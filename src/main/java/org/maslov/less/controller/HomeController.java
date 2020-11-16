@@ -23,12 +23,13 @@ public class HomeController {
 
     @GetMapping("/")
     public String hello() {
+
         return "/Hello";
     }
     @RequestMapping(value = "/users")
     public String getUsers(Model model) throws SQLException {
         model.addAttribute( "users", userDAO.getAll() );
-        return "users";
+        return "Users";
     }
     @GetMapping(value = "/addUsers")
     public String getSignUp(Model model)
