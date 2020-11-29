@@ -41,12 +41,12 @@ public class HomeController {
         return "/Sign_up";
     }
     @PostMapping(value = "/addUsers")
-    public String getSignUp(@ModelAttribute @Valid User user, BindingResult result){
+    public String getSignUp(@ModelAttribute @Valid User user, BindingResult result) throws SQLException {
         userValidator.validate( user, result);
         if (result.hasErrors()){
             return "/Sign_up";
         }
-        //users.add(user);
+        userDAO.add(user);
         return "redirect:/users";
     }
 }
