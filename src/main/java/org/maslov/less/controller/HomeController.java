@@ -2,6 +2,7 @@ package org.maslov.less.controller;
 
 import org.maslov.less.dao.UserDAO;
 import org.maslov.less.model.User;
+import org.maslov.less.utils.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +19,8 @@ import java.util.Collection;
 
 @Controller
 public class HomeController {
+    @Autowired
+    private UserValidator userValidator;
     @Autowired
     private UserDAO userDAO;
 
@@ -39,6 +42,7 @@ public class HomeController {
     }
     @PostMapping(value = "/addUsers")
     public String getSignUp(@ModelAttribute @Valid User user, BindingResult result){
+        userValidator.validate( user, result);
         if (result.hasErrors()){
             return "/Sign_up";
         }
