@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import java.sql.*;
 import java.util.List;
+import java.util.stream.DoubleStream;
 ;
 
 @Component
@@ -24,6 +25,9 @@ public class UserDAO {
 
 
     public User getOne(String email) {
+        return jdbcTemplate.query("select * from users where email = ?")
+                new Object[]{email}, new BeanPropertyRowMapper<>(User.class)
+        ).stream().findAny().orElse(null);
         try {
             Connection conn;
             PreparedStatement ps = conn.prepareStatement("select * from users where email = ?");
@@ -40,6 +44,10 @@ public class UserDAO {
        }
         return null;
    }
+
+    private DoubleStream stream() {
+        return null;
+    }
 
     public void add(User user) throws SQLException {
         Connection conn;
