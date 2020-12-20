@@ -46,7 +46,7 @@ public class HomeController {
         if (result.hasErrors()){
             return "/Sign_up";
         }
-        userDAO.add(user);
+       // userDAO.add(user);
         return "redirect:/users";
     }
 }
